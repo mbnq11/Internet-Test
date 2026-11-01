@@ -1,61 +1,6 @@
-Claude
-Pasted text.txt
-Pasted text.txt
-TXT
-ابغى صحيح ودقيق
-
-كتابة الدالة الخاصة بقياس التنزيل والتحقق من حساب السرعة
-Thought for 18s
-
-مراجعة ملف اختبار السرعة لتصحيح الأخطاء.
-
-إعادة كتابة ملف اختبار السرعة بشكل صحيح.
-
-تصميم قياس دقيق للتنزيل والرفع والاستجابة.
-
-كتابة الدالة الخاصة بقياس التنزيل والتحقق من حساب السرعة.
-
-الكود الحالي ما يقيس بدقة، فيه مشاكل أساسية سأصلحها في نسخة جديدة.
-
-Created speedtest.html
-لازم يكون كامل ودقيق
-
-Shared a file, ran a command
-أرسلت لك الملف speedtest.html كاملاً بعد إصلاح مشاكل الدقة. لم أشغّله على متصفح حقيقي، لكن فحصت الكود ولا توجد أخطاء فيه، فجرّبه عندك وقل لي إن ظهر أي خلل.
-
-المشاكل في الكود القديم:
-
-الرفع كان وهمياً: القيمة كانت تُحسب عشوائياً من سرعة التنزيل.
-قيم بديلة مزيفة: عند فشل الاتصال كان يعرض أرقاماً عشوائية بدل رسالة خطأ، ومنها Ping ثابت 15 ms.
-التنزيل لا يملأ الخط: كان يستخدم اتصالاً واحداً وملفاً صغيراً بدون تسخين.
-الـ Ping غير دقيق: كان يقيس طلباً واحداً يشمل زمن فتح الاتصال.
-الرقم الأخير على الشاشة: كان يعرض سرعة الرفع بدل التنزيل.
-ما تغيّر:
-
-التنزيل: 4 اتصالات متوازية لمدة 10 ثوانٍ، مع تجاهل أول ثانيتين، ويُحسب من البايتات المستلمة فعلاً.
-الرفع: طلبات رفع حقيقية ببيانات عشوائية، ويُحسب من البايتات المرسلة فعلاً.
-Ping: 12 قياساً بعد طلب تسخين، ويُعرض الوسيط، وأضفت Jitter.
-الأخطاء: إذا فشل الاتصال تظهر رسالة خطأ واضحة بدون أرقام مزيفة.
-الشاشة: العدّاد يتحرك لحظياً أثناء القياس، وتبقى نتيجة التنزيل النهائية ظاهرة بعد انتهاء الاختبار.
-اللغة: الصفحة تفتح بالعربية افتراضياً مع زر للتبديل إلى الإنجليزية.
-حدود لازم تعرفها:
-
-الاختبار يقيس سرعتك نحو أقرب خادم Cloudflare، وقد تختلف نتيجته قليلاً عن Speedtest أو Fast.com.
-قد يحجب الطلبات أحياناً مانع إعلانات أو VPN، وفي هذه الحالة ستظهر رسالة الخطأ.
-للحصول على أدق نتيجة استخدم كابل شبكة بدل الواي فاي، وأوقف أي تنزيلات أخرى.
-Speedtest
-Code
-·HTML
-
-
-
-Claude is AI and can make mistakes.
-
-
-Speedtest · HTML
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,420 +9,1088 @@ Speedtest · HTML
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box }
- 
+
         :root {
-            --apple-bg: #f5f5f7;
-            --apple-border: #e6e6e9;
-            --apple-blue: #0071e3;
-            --apple-blue-light: #edf5ff;
-            --text-primary: #1d1d1f;
-            --text-secondary: #6e6e73;
-            --text-tertiary: #86868b;
-            --error: #d70015;
+            --bg: #f5f5f7; --card: #fff; --border: #e6e6e9; --soft: #f5f5f7;
+            --blue: #0071e3; --blue-light: #edf5ff;
+            --green: #1a8f4c; --orange: #b86e00; --red: #d70015;
+            --text: #1d1d1f; --text2: #6e6e73; --text3: #86868b;
+            --nav: rgba(250, 250, 252, .88);
         }
- 
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #000; --card: #1c1c1e; --border: #2c2c2e; --soft: #2a2a2d;
+                --blue: #2f8cff; --blue-light: #0f2236;
+                --green: #30d158; --orange: #ff9f0a; --red: #ff453a;
+                --text: #f5f5f7; --text2: #a1a1a6; --text3: #8e8e93;
+                --nav: rgba(20, 20, 22, .85);
+            }
+        }
+        :root[data-theme="dark"] {
+            --bg: #000; --card: #1c1c1e; --border: #2c2c2e; --soft: #2a2a2d;
+            --blue: #2f8cff; --blue-light: #0f2236;
+            --green: #30d158; --orange: #ff9f0a; --red: #ff453a;
+            --text: #f5f5f7; --text2: #a1a1a6; --text3: #8e8e93;
+            --nav: rgba(20, 20, 22, .85);
+        }
+
         html { scroll-behavior: smooth }
- 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Tajawal", "Segoe UI", sans-serif;
-            background: var(--apple-bg);
-            color: var(--text-primary);
-            font-size: 15px;
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-            padding-bottom: 48px;
+            background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.65;
+            -webkit-font-smoothing: antialiased; padding-bottom: 48px;
         }
- 
-        a { color: var(--apple-blue); text-decoration: none }
-        button { font: inherit }
+        button, select, input { font: inherit; color: inherit }
         button, a { -webkit-tap-highlight-color: transparent }
- 
+        a { color: var(--blue); text-decoration: none }
+
         .apple-nav {
-            position: sticky; top: 0; z-index: 1000; height: 62px;
-            background: rgba(250, 250, 252, .88);
+            position: sticky; top: 0; z-index: 1000; height: 62px; background: var(--nav);
             backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
-            border-bottom: 1px solid rgba(0, 0, 0, .06);
+            border-bottom: 1px solid var(--border);
         }
         .nav-content {
-            height: 100%; max-width: 1160px; margin: auto; padding: 0 28px;
-            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            height: 100%; max-width: 1160px; margin: auto; padding: 0 20px;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
         }
-        .nav-brand {
-            font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;
-            color: var(--text-primary);
+        .nav-brand { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; color: var(--text) }
+        .nav-actions { display: flex; gap: 8px }
+        .chip-btn {
+            display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border);
+            background: var(--card); color: var(--text); border-radius: 50px; padding: 8px 14px;
+            min-height: 38px; font-size: 12px; cursor: pointer;
         }
-        .language-toggle {
-            display: flex; align-items: center; gap: 7px;
-            border: 1px solid var(--apple-border); background: white; color: var(--text-primary);
-            border-radius: 50px; padding: 8px 15px; min-height: 38px; font-size: 12px; cursor: pointer;
+        .chip-btn:hover:not(:disabled) { border-color: var(--blue) }
+        .chip-btn:disabled { opacity: .5; cursor: not-allowed }
+
+        .container { max-width: 940px; padding: 32px 18px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px }
+        .card {
+            background: var(--card); border-radius: 24px; padding: 32px;
+            border: 1px solid var(--border); text-align: center;
         }
- 
-        .container {
-            max-width: 900px; padding: 40px 20px; margin: 0 auto;
-            display: flex; flex-direction: column; gap: 32px;
+        .card.start { text-align: start }
+        h1.title { font-size: clamp(24px, 3vw, 32px); font-weight: 650; letter-spacing: -.035em; margin-bottom: 10px; text-align: center }
+        h2.sec { font-size: 18px; font-weight: 650; margin-bottom: 6px }
+        .desc { color: var(--text2); font-size: 15px; margin-bottom: 28px; text-align: center }
+        .hint { color: var(--text3); font-size: 13px; margin-bottom: 14px }
+
+        .gauge {
+            --p: 0; width: 240px; height: 240px; border-radius: 50%; margin: 0 auto 16px;
+            background: conic-gradient(var(--blue) calc(var(--p) * 1%), var(--border) 0);
+            display: grid; place-items: center; padding: 10px;
         }
-        .bento-card {
-            background: white; border-radius: 24px; padding: 36px;
-            border: 1px solid rgba(0, 0, 0, .04);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02); text-align: center;
-        }
-        .section-title {
-            font-size: clamp(24px, 3vw, 32px); font-weight: 650;
-            letter-spacing: -.035em; margin-bottom: 12px;
-        }
-        .section-desc { color: var(--text-secondary); font-size: 15px; margin-bottom: 32px }
- 
-        .gauge-container {
-            position: relative; width: 220px; height: 220px; margin: 0 auto 32px;
+        .gauge-inner {
+            width: 100%; height: 100%; border-radius: 50%; background: var(--blue-light);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: var(--apple-blue-light); border-radius: 50%;
-            border: 4px solid var(--apple-border); transition: border-color .3s ease;
         }
-        .gauge-container.running { border-color: var(--apple-blue) }
-        .speed-value {
-            font-size: 44px; font-weight: 700; color: var(--apple-blue); line-height: 1.1;
-            font-variant-numeric: tabular-nums;
-        }
-        .speed-unit {
-            font-size: 13px; color: var(--text-tertiary); text-transform: uppercase;
-            font-weight: 600; letter-spacing: 0.05em;
-        }
-        .speed-status {
-            font-size: 14px; color: var(--text-secondary); margin-top: 8px; font-weight: 500;
-            padding: 0 14px; max-width: 200px;
-        }
-        .speed-status.error { color: var(--error) }
- 
-        .apple-pill-btn {
+        .g-tag { font-size: 12px; color: var(--text3); font-weight: 600; min-height: 18px }
+        .g-val { font-size: 48px; font-weight: 700; color: var(--blue); line-height: 1.1; font-variant-numeric: tabular-nums; direction: ltr }
+        .g-unit { font-size: 13px; color: var(--text3); text-transform: uppercase; font-weight: 600; letter-spacing: .05em }
+        .status { min-height: 26px; margin-bottom: 18px; color: var(--text2); font-weight: 500 }
+        .status.error { color: var(--red) }
+
+        .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap }
+        .pill-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 14px 32px; min-height: 50px; border-radius: 50px;
-            font-size: 15px; font-weight: 600; cursor: pointer; transition: all .2s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            background: var(--apple-blue); border: 1px solid var(--apple-blue); color: white;
+            padding: 14px 32px; min-height: 50px; border-radius: 50px; font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all .2s; border: 1px solid var(--blue); background: var(--blue); color: #fff;
         }
-        .apple-pill-btn:hover:not(:disabled) { background: #0077ed; transform: translateY(-1px) }
-        .apple-pill-btn:disabled { opacity: .6; cursor: not-allowed }
- 
-        .metrics-grid {
-            display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px; margin-top: 32px;
+        .pill-btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px) }
+        .pill-btn:disabled { opacity: .55; cursor: not-allowed }
+        .pill-btn.secondary { background: var(--card); color: var(--text); border-color: var(--border) }
+        .pill-btn.danger { background: var(--card); color: var(--red); border-color: var(--red) }
+
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 28px }
+        .metric { background: var(--soft); padding: 16px 12px; border-radius: 18px; border: 1px solid var(--border) }
+        .m-title { font-size: 12px; color: var(--text3); font-weight: 600; margin-bottom: 6px }
+        .m-val { font-size: 21px; font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: plaintext }
+        .m-sub { font-size: 12px; color: var(--text3); min-height: 18px; direction: ltr; unicode-bidi: plaintext }
+
+        .warns { list-style: none; margin-top: 18px; text-align: start; display: none }
+        .warns.show { display: block }
+        .warns li { color: var(--orange); font-size: 13px; padding: 4px 0 }
+        .warns li::before { content: "⚠ " }
+
+        canvas#chart { width: 100%; height: 230px; display: block }
+        .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--text2); margin-top: 10px; justify-content: center }
+        .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-inline-end: 6px; vertical-align: -1px }
+
+        .use-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 14px }
+        .use { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px; background: var(--soft); border: 1px solid var(--border); font-size: 14px }
+        .badge { font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 20px; border: 1px solid currentColor; white-space: nowrap }
+        .badge.ok { color: var(--green) } .badge.warn { color: var(--orange) } .badge.bad { color: var(--red) }
+
+        details.card > summary { cursor: pointer; font-size: 18px; font-weight: 650; list-style: none; display: flex; justify-content: space-between; align-items: center }
+        details.card > summary::-webkit-details-marker { display: none }
+        details.card > summary::after { content: "▾"; color: var(--text3) }
+        details.card[open] > summary::after { content: "▴" }
+        details.card .body { margin-top: 18px }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px }
+        .field label.lbl { display: block; font-size: 13px; color: var(--text2); margin-bottom: 4px; font-weight: 600 }
+        select {
+            width: 100%; min-height: 42px; padding: 8px 12px; border-radius: 12px;
+            border: 1px solid var(--border); background: var(--soft); cursor: pointer;
         }
-        .metric-card {
-            background: var(--apple-bg); padding: 18px 12px; border-radius: 18px;
-            border: 1px solid var(--apple-border);
+        select:disabled, input:disabled { opacity: .55; cursor: not-allowed }
+        .checks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px }
+        .checks label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px }
+        input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--blue) }
+        .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px }
+
+        .tbl-wrap { overflow-x: auto }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums }
+        th, td { padding: 8px 10px; text-align: start; border-bottom: 1px solid var(--border); white-space: nowrap }
+        th { color: var(--text3); font-weight: 600 }
+        td.val { direction: ltr; unicode-bidi: plaintext; text-align: start; white-space: normal }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px }
+        .empty { color: var(--text3); padding: 14px 0 }
+
+        .notes { font-size: 13px; color: var(--text2); line-height: 1.9; padding-inline-start: 18px }
+        .notes li { margin-bottom: 4px }
+
+        .toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 30px;
+            font-size: 14px; opacity: 0; pointer-events: none; transition: all .25s; z-index: 2000;
         }
-        .metric-title {
-            font-size: 12px; color: var(--text-tertiary); text-transform: uppercase;
-            font-weight: 600; margin-bottom: 8px;
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0) }
+        footer { text-align: center; font-size: 13px; color: var(--text3); margin-top: 8px }
+
+        @media (max-width: 600px) {
+            .container { padding: 18px 12px }
+            .card { padding: 22px 16px }
+            .gauge { width: 210px; height: 210px }
+            .g-val { font-size: 40px }
         }
-        .metric-val { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr }
- 
-        .notes {
-            margin-top: 28px; font-size: 13px; color: var(--text-tertiary);
-            text-align: start; line-height: 1.8;
-        }
- 
-        footer { text-align: center; font-size: 13px; color: var(--text-tertiary); margin-top: 20px }
- 
-        @media(max-width: 700px) {
-            .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
-            .container { padding: 20px 14px }
-            .bento-card { padding: 24px 18px }
-        }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important } }
     </style>
 </head>
- 
+
 <body>
     <header class="apple-nav">
         <div class="nav-content">
             <a class="nav-brand" href="#">
-                <i class="fas fa-gauge-high" style="color: var(--apple-blue);"></i>
+                <i class="fas fa-gauge-high" style="color: var(--blue);"></i>
                 <span data-i18n="brand"></span>
             </a>
-            <button type="button" class="language-toggle" onclick="toggleLanguage()">
-                <i class="fas fa-globe"></i>
-                <span id="langBtn"></span>
-            </button>
+            <div class="nav-actions">
+                <button type="button" class="chip-btn" id="themeBtn" aria-label="Theme"><i class="fas fa-circle-half-stroke"></i></button>
+                <button type="button" class="chip-btn" id="langBtn"><i class="fas fa-globe"></i><span id="langLabel"></span></button>
+            </div>
         </div>
     </header>
- 
+
     <main class="container">
-        <div class="bento-card">
-            <h1 class="section-title" data-i18n="title"></h1>
-            <p class="section-desc" data-i18n="desc"></p>
- 
-            <div class="gauge-container" id="gaugeBox">
-                <div>
-                    <div class="speed-value" id="speedNum">0.00</div>
-                    <div class="speed-unit">Mbps</div>
-                </div>
-                <div class="speed-status" id="speedStatus"></div>
-            </div>
- 
-            <button type="button" class="apple-pill-btn" id="startBtn" onclick="startSpeedTest()">
-                <i class="fas fa-play"></i>
-                <span id="startLabel"></span>
-            </button>
- 
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-title" data-i18n="ping"></div>
-                    <div class="metric-val" id="pingVal">-- ms</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-title" data-i18n="jitter"></div>
-                    <div class="metric-val" id="jitterVal">-- ms</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-title" data-i18n="download"></div>
-                    <div class="metric-val" id="downloadVal">-- Mbps</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-title" data-i18n="upload"></div>
-                    <div class="metric-val" id="uploadVal">-- Mbps</div>
+        <!-- Main test -->
+        <section class="card">
+            <h1 class="title" data-i18n="title"></h1>
+            <p class="desc" data-i18n="desc"></p>
+
+            <div class="gauge" id="gauge">
+                <div class="gauge-inner">
+                    <div class="g-tag" id="gTag"></div>
+                    <div class="g-val" id="gVal">0.00</div>
+                    <div class="g-unit" id="gUnit">Mbps</div>
                 </div>
             </div>
- 
-            <p class="notes" data-i18n="notes"></p>
-        </div>
- 
-        <footer>
-            <p data-i18n="footer"></p>
-        </footer>
+            <div class="status" id="status" role="status" aria-live="polite"></div>
+
+            <div class="btn-row">
+                <button type="button" class="pill-btn" id="startBtn"><i class="fas fa-play"></i><span id="startLabel"></span></button>
+                <button type="button" class="pill-btn danger" id="cancelBtn" hidden><i class="fas fa-stop"></i><span data-i18n="cancel"></span></button>
+            </div>
+
+            <div class="metrics">
+                <div class="metric"><div class="m-title" data-i18n="m_ping"></div><div class="m-val" id="pingVal">--</div><div class="m-sub" id="pingSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_jitter"></div><div class="m-val" id="jitterVal">--</div><div class="m-sub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_down"></div><div class="m-val" id="downVal">--</div><div class="m-sub" id="downSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_up"></div><div class="m-val" id="upVal">--</div><div class="m-sub" id="upSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_ld"></div><div class="m-val" id="ldVal">--</div><div class="m-sub" id="ldSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_lu"></div><div class="m-val" id="luVal">--</div><div class="m-sub" id="luSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_bb"></div><div class="m-val" id="bbVal">--</div><div class="m-sub" id="bbSub"></div></div>
+                <div class="metric"><div class="m-title" data-i18n="m_data"></div><div class="m-val" id="dataVal">--</div><div class="m-sub" id="dataSub"></div></div>
+            </div>
+            <ul class="warns" id="warns"></ul>
+        </section>
+
+        <!-- Live chart -->
+        <section class="card start">
+            <h2 class="sec" data-i18n="chartTitle"></h2>
+            <p class="hint" data-i18n="chartHint"></p>
+            <canvas id="chart" role="img" aria-label="Speed chart"></canvas>
+            <div class="legend">
+                <span><i style="background: var(--blue)"></i><span data-i18n="m_down"></span></span>
+                <span><i style="background: var(--green)"></i><span data-i18n="m_up"></span></span>
+                <span><i style="background: var(--text3); opacity: .35"></i><span data-i18n="legendWarm"></span></span>
+            </div>
+        </section>
+
+        <!-- Suitability -->
+        <section class="card start" id="useCard" hidden>
+            <h2 class="sec" data-i18n="useTitle"></h2>
+            <p class="hint" data-i18n="useHint"></p>
+            <div class="use-list" id="useList"></div>
+        </section>
+
+        <!-- Settings -->
+        <details class="card start" open>
+            <summary data-i18n="setTitle"></summary>
+            <div class="body">
+                <p class="hint" data-i18n="presetsLbl"></p>
+                <div class="presets">
+                    <button type="button" class="chip-btn" data-preset="quick" data-i18n="pQuick"></button>
+                    <button type="button" class="chip-btn" data-preset="std" data-i18n="pStd"></button>
+                    <button type="button" class="chip-btn" data-preset="deep" data-i18n="pDeep"></button>
+                    <button type="button" class="chip-btn" data-preset="reset" data-i18n="pReset"></button>
+                </div>
+                <div class="form-grid">
+                    <div class="field"><label class="lbl" for="optDuration" data-i18n="o_duration"></label><select id="optDuration"></select></div>
+                    <div class="field"><label class="lbl" for="optStreams" data-i18n="o_streams"></label><select id="optStreams"></select></div>
+                    <div class="field"><label class="lbl" for="optCap" data-i18n="o_cap"></label><select id="optCap"></select></div>
+                    <div class="field"><label class="lbl" for="optUnit" data-i18n="o_unit"></label><select id="optUnit"></select></div>
+                    <div class="field"><label class="lbl" for="optTheme" data-i18n="o_theme"></label><select id="optTheme"></select></div>
+                </div>
+                <div class="field" style="margin-top:16px">
+                    <span class="lbl" style="font-size:13px;color:var(--text2);font-weight:600" data-i18n="o_tests"></span>
+                    <div class="checks">
+                        <label><input type="checkbox" id="tPing"><span data-i18n="t_ping"></span></label>
+                        <label><input type="checkbox" id="tDown"><span data-i18n="t_down"></span></label>
+                        <label><input type="checkbox" id="tUp"><span data-i18n="t_up"></span></label>
+                        <label><input type="checkbox" id="tLoaded"><span data-i18n="t_loaded"></span></label>
+                        <label><input type="checkbox" id="optHistory"><span data-i18n="o_history"></span></label>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- History -->
+        <details class="card start">
+            <summary data-i18n="hTitle"></summary>
+            <div class="body">
+                <div class="tbl-wrap" id="histWrap"></div>
+                <div class="actions">
+                    <button type="button" class="chip-btn" id="copyBtn"><i class="fas fa-copy"></i><span data-i18n="hCopy"></span></button>
+                    <button type="button" class="chip-btn" id="csvBtn"><i class="fas fa-file-csv"></i><span data-i18n="hCsv"></span></button>
+                    <button type="button" class="chip-btn" id="jsonBtn"><i class="fas fa-file-code"></i><span data-i18n="hJson"></span></button>
+                    <button type="button" class="chip-btn" id="clearBtn"><i class="fas fa-trash"></i><span data-i18n="hClear"></span></button>
+                </div>
+            </div>
+        </details>
+
+        <!-- Details / proof -->
+        <details class="card start">
+            <summary data-i18n="dTitle"></summary>
+            <div class="body">
+                <p class="hint" data-i18n="dDesc"></p>
+                <div class="tbl-wrap"><table><tbody id="detailsBody"></tbody></table></div>
+            </div>
+        </details>
+
+        <!-- Notes -->
+        <section class="card start">
+            <h2 class="sec" data-i18n="nTitle"></h2>
+            <ul class="notes" id="notesList"></ul>
+        </section>
+
+        <footer><p data-i18n="footer"></p></footer>
     </main>
- 
+    <div class="toast" id="toast"></div>
+
     <script>
-        // ---------- Configuration ----------
+    (() => {
+        'use strict';
+
+        // ============================================================
+        //  Constants
+        // ============================================================
         const BASE = 'https://speed.cloudflare.com';
-        const CFG = {
-            pingSamples: 12,
-            streams: 4,            // parallel connections (needed to saturate fast links)
-            testMs: 10000,         // duration of each phase
-            warmupMs: 2000,        // ignored at start (TCP slow-start ramp-up)
-            downChunk: 25_000_000, // bytes per download request
-            upChunk: 8_000_000     // bytes per upload request
+        const CHUNK_DOWN = 50000000;  // bytes per download request (aborted when the test ends)
+        const CHUNK_UP = 16000000;    // bytes per upload request
+        const PING_SAMPLES = 20;
+        const HISTORY_MAX = 100;
+        const CANCEL = Symbol('cancel');
+
+        const DEFAULTS = {
+            lang: 'ar', theme: 'auto', unit: 'Mbps',
+            duration: 10, streams: 4, cap: 0, history: true,
+            tests: { ping: true, down: true, up: true, loaded: true }
         };
- 
-        // ---------- i18n ----------
+        const PRESETS = {
+            quick: { duration: 5, streams: 4, cap: 100 },
+            std: { duration: 10, streams: 4, cap: 0 },
+            deep: { duration: 20, streams: 8, cap: 0 }
+        };
+        const UNITS = { Mbps: { f: 1, label: 'Mbps' }, MBps: { f: 1 / 8, label: 'MB/s' }, Gbps: { f: 1 / 1000, label: 'Gbps' } };
+
+        // ============================================================
+        //  Helpers
+        // ============================================================
+        const $ = id => document.getElementById(id);
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const store = {
+            get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+            set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+        };
+        const median = a => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+        const fmtN = n => n >= 100 ? n.toFixed(0) : n >= 10 ? n.toFixed(1) : n >= 1 ? n.toFixed(2) : n.toFixed(3);
+        const fmtMs = v => v < 10 ? v.toFixed(1) : String(Math.round(v));
+        const fmtBytes = b => b >= 1e9 ? (b / 1e9).toFixed(2) + ' GB' : (b / 1e6).toFixed(b >= 1e8 ? 0 : 1) + ' MB';
+
+        // ============================================================
+        //  State
+        // ============================================================
+        let settings = mergeSettings(store.get('speedtest.settings', {}));
+        let state = 'idle';       // idle | running | done | error | cancelled
+        let phase = null;         // server | ping | down | up
+        let run = null;
+        let lastResult = null;
+        let lastWarns = [];
+        let chart = { down: [], up: [], downWarm: null, upWarm: null };
+
+        function mergeSettings(s) {
+            const m = JSON.parse(JSON.stringify(DEFAULTS));
+            if (!s || typeof s !== 'object') return m;
+            for (const k of ['lang', 'theme', 'unit']) if (typeof s[k] === 'string') m[k] = s[k];
+            for (const k of ['duration', 'streams', 'cap']) if (typeof s[k] === 'number' && isFinite(s[k]) && s[k] >= 0) m[k] = s[k];
+            if (typeof s.history === 'boolean') m.history = s.history;
+            if (s.tests && typeof s.tests === 'object') for (const k of Object.keys(m.tests)) if (typeof s.tests[k] === 'boolean') m.tests[k] = s.tests[k];
+            if (!UNITS[m.unit]) m.unit = 'Mbps';
+            if (!['ar', 'en'].includes(m.lang)) m.lang = 'ar';
+            if (!['auto', 'light', 'dark'].includes(m.theme)) m.theme = 'auto';
+            return m;
+        }
+        const saveSettings = () => store.set('speedtest.settings', settings);
+
+        // ============================================================
+        //  i18n
+        // ============================================================
         const T = {
             ar: {
                 brand: 'قياس سرعة الإنترنت',
                 title: 'اختبار سرعة الاتصال بالإنترنت',
-                desc: 'قياس حقيقي لسرعة التنزيل والرفع وزمن الاستجابة (Ping) والتذبذب (Jitter).',
-                ping: 'الاستجابة (Ping)', jitter: 'التذبذب (Jitter)',
-                download: 'التنزيل (Download)', upload: 'الرفع (Upload)',
-                start: 'بدء الاختبار', again: 'إعادة الاختبار',
+                desc: 'قياس حقيقي للتنزيل والرفع وزمن الاستجابة والتذبذب والاستقرار تحت الحمل — بدون أي قيم مولّدة.',
+                start: 'بدء الاختبار', again: 'إعادة الاختبار', cancel: 'إلغاء',
                 ready: 'جاهز للاختبار',
-                sPing: 'جاري قياس الاستجابة...',
-                sDown: 'جاري قياس التنزيل...',
-                sUp: 'جاري قياس الرفع...',
+                s_server: 'جاري تحديد الخادم...', s_ping: 'جاري قياس الاستجابة...',
+                s_down: 'جاري قياس التنزيل...', s_up: 'جاري قياس الرفع...',
                 done: 'اكتمل الاختبار',
-                err: 'تعذّر الاتصال بخادم الاختبار. تأكد من اتصالك وأن المتصفح لا يحجب الطلبات (إضافات حجب الإعلانات/VPN) ثم أعد المحاولة.',
-                notes: 'ملاحظات: السرعة تُقاس بالميجابت في الثانية (Mbps) وليس ميجابايت (MB/s)، أي 100 Mbps ≈ 12.5 MB/s. القياس يتم نحو أقرب خادم Cloudflare، ويتأثر بالواي فاي والتطبيقات المفتوحة. للحصول على أدق نتيجة استخدم كابل شبكة وأغلق التنزيلات الأخرى.',
+                cancelled: 'تم إلغاء الاختبار — لم تُعرض أو تُحفظ أي نتائج جزئية.',
+                errAll: 'تعذّر الاتصال بخادم الاختبار. تأكد من اتصالك وأن إضافات حجب الإعلانات أو الـ VPN لا تحجب الطلبات، ثم أعد المحاولة.',
+                pickOne: 'اختر اختباراً واحداً على الأقل من الخيارات.',
+                tag_server: 'الخادم', tag_ping: 'Ping', tag_down: '↓ التنزيل', tag_up: '↑ الرفع',
+                m_ping: 'الاستجابة (Ping)', m_jitter: 'التذبذب (Jitter)', m_down: 'التنزيل', m_up: 'الرفع',
+                m_ld: 'الاستجابة أثناء التنزيل', m_lu: 'الاستجابة أثناء الرفع',
+                m_bb: 'الاستقرار تحت الحمل', m_data: 'البيانات المستهلكة',
+                peak: 'الذروة', range: 'المدى', grade: 'التقييم',
+                w_fail_ping: 'فشل قياس الاستجابة (Ping).',
+                w_fail_down: 'فشل قياس التنزيل.',
+                w_fail_up: 'فشل قياس الرفع (قد يمنع المتصفح أو الشبكة طلبات الرفع).',
+                w_hidden: 'كانت الصفحة في الخلفية أثناء الاختبار، والمتصفح يبطّئ الصفحات الخلفية، لذلك قد تكون النتائج غير دقيقة. أعد الاختبار والصفحة ظاهرة.',
+                w_short: 'نافذة القياس الفعلية أقصر من 3 ثوانٍ (بسبب حد البيانات)، فدقة النتيجة أقل. ارفع الحد أو ألغِه.',
+                w_capHit: 'تم إيقاف إحدى المراحل عند بلوغ حد البيانات المحدد.',
+                w_noProbe: 'لم تتوفر عيّنات كافية لقياس الاستجابة تحت الحمل في إحدى المراحل.',
+                chartTitle: 'الرسم الحي للسرعة',
+                chartHint: 'كل نقطة هنا قياس حقيقي خلال الاختبار. المنطقة الرمادية هي فترة التسخين المستبعدة من النتيجة.',
+                legendWarm: 'فترة التسخين (غير محسوبة)',
+                useTitle: 'ماذا يناسب اتصالك؟', useHint: 'إرشادات تقريبية مبنية على نتائجك أعلاه.',
+                lv_ok: 'مناسب', lv_warn: 'مقبول', lv_bad: 'غير مناسب',
+                u_call: 'مكالمات الفيديو HD', u_hd: 'بث 1080p', u_4k: 'بث 4K',
+                u_game: 'الألعاب الأونلاين', u_up: 'رفع الملفات والنسخ الاحتياطي',
+                setTitle: 'الخيارات', presetsLbl: 'إعدادات جاهزة',
+                pQuick: 'سريع (5ث / حد 100MB)', pStd: 'قياسي', pDeep: 'دقيق جداً (20ث / 8 اتصالات)', pReset: 'استعادة الافتراضي',
+                o_duration: 'مدة كل مرحلة', o_streams: 'عدد الاتصالات المتوازية', o_cap: 'حد البيانات لكل مرحلة',
+                o_unit: 'وحدة العرض', o_theme: 'المظهر', o_tests: 'الاختبارات المطلوبة',
+                t_ping: 'الاستجابة والتذبذب', t_down: 'التنزيل', t_up: 'الرفع', t_loaded: 'الاستجابة تحت الحمل',
+                o_history: 'حفظ النتائج على هذا الجهاز',
+                sec: 'ثانية', unlimited: 'بدون حد', theme_auto: 'تلقائي', theme_light: 'فاتح', theme_dark: 'داكن',
+                hTitle: 'سجل النتائج', hEmpty: 'لا توجد نتائج محفوظة بعد.',
+                hDate: 'التاريخ', hServer: 'الخادم',
+                hCopy: 'نسخ آخر نتيجة', hCsv: 'تصدير CSV', hJson: 'تصدير JSON', hClear: 'مسح السجل',
+                copied: 'تم النسخ', copyFail: 'تعذّر النسخ', cleared: 'تم مسح السجل', nothing: 'لا توجد نتيجة بعد',
+                dTitle: 'تفاصيل القياس (للتحقق)',
+                dDesc: 'هذه هي المعطيات الخام التي بُنيت عليها الأرقام: كل سرعة = (البايتات المنقولة فعلاً × 8) ÷ زمن نافذة القياس بعد استبعاد التسخين.',
+                d_server: 'الخادم', d_isp: 'المزوّد (كما يراه الخادم)', d_ip: 'عنوانك العام',
+                d_ping: 'عيّنات Ping', d_loss: 'طلبات Ping الفاشلة', d_down: 'التنزيل', d_up: 'الرفع',
+                d_total: 'إجمالي البيانات المنقولة', d_browser: 'تقدير المتصفح (ليس من هذا الاختبار)',
+                d_conn: 'اتصالات متوازية', d_none: 'لا توجد بيانات بعد — شغّل الاختبار.',
+                samples: 'عيّنة', bytesWin: 'بيانات', window: 'نافذة القياس', warm: 'تسخين مستبعد', s: 'ث',
+                nTitle: 'ملاحظات مهمة',
+                notes: [
+                    'السرعة بالميجابت في الثانية (Mbps) وليس ميجابايت (MB/s): كل 8 Mbps = 1 MB/s.',
+                    'الاختبار نحو أقرب خادم Cloudflare، وقد تختلف النتيجة قليلاً عن Speedtest أو Fast.com لأن لكل خدمة خادماً وطريقة قياس مختلفة.',
+                    'يُستبعد من الحساب أول جزء من كل مرحلة (التسخين) لأن بداية الاتصال أبطأ بطبيعتها، وتُحسب السرعة فقط على البايتات المنقولة بعد ذلك.',
+                    'الرفع يُحسب من البايتات التي سلّمها المتصفح للشبكة؛ على المدد القصيرة قد يزيد الرقم قليلاً بسبب المخزن المؤقت، لذلك تفضّل 10 ثوانٍ فأكثر.',
+                    'المتصفحات قد تدمج الاتصالات المتوازية على اتصال واحد (HTTP/2)، لذلك قد تظهر الروابط الأسرع جداً (فوق 500 Mbps تقريباً) أقل من حقيقتها.',
+                    'الاستجابة تحت الحمل (Bufferbloat) تقيس كم يرتفع الـ Ping أثناء التنزيل/الرفع؛ الارتفاع الكبير يعني تقطعاً في المكالمات والألعاب عند استخدام الإنترنت بالتوازي.',
+                    'على باقات البيانات المحدودة استخدم «حد البيانات»؛ فالاختبار على الروابط السريعة قد يستهلك مئات الميجابايت.',
+                    'للحصول على أدق نتيجة: كابل شبكة بدل الواي فاي، أغلق التنزيلات والبث، أوقف الـ VPN، وأبقِ الصفحة ظاهرة طوال الاختبار.'
+                ],
                 footer: 'تصميم وتطوير: محمد نواف • متوافق مع جميع الأجهزة'
             },
             en: {
                 brand: 'Internet Speed Test',
                 title: 'Test Your Internet Connection',
-                desc: 'A real measurement of download, upload, latency (Ping) and Jitter.',
-                ping: 'Latency (Ping)', jitter: 'Jitter',
-                download: 'Download', upload: 'Upload',
-                start: 'Start Test', again: 'Test Again',
+                desc: 'Real measurement of download, upload, latency, jitter and stability under load — no generated values.',
+                start: 'Start Test', again: 'Test Again', cancel: 'Cancel',
                 ready: 'Ready to test',
-                sPing: 'Measuring latency...',
-                sDown: 'Testing download...',
-                sUp: 'Testing upload...',
+                s_server: 'Locating server...', s_ping: 'Measuring latency...',
+                s_down: 'Testing download...', s_up: 'Testing upload...',
                 done: 'Test complete',
-                err: 'Could not reach the test server. Check your connection and any ad-blocker/VPN blocking the requests, then try again.',
-                notes: 'Notes: speed is in megabits per second (Mbps), not megabytes (MB/s): 100 Mbps ≈ 12.5 MB/s. The test runs against the nearest Cloudflare server and is affected by Wi-Fi and background apps. For the most accurate result, use a wired connection and pause other downloads.',
+                cancelled: 'Test cancelled — no partial results were shown or saved.',
+                errAll: 'Could not reach the test server. Check your connection and any ad-blocker/VPN blocking the requests, then try again.',
+                pickOne: 'Select at least one test in the options.',
+                tag_server: 'Server', tag_ping: 'Ping', tag_down: '↓ Download', tag_up: '↑ Upload',
+                m_ping: 'Latency (Ping)', m_jitter: 'Jitter', m_down: 'Download', m_up: 'Upload',
+                m_ld: 'Latency during download', m_lu: 'Latency during upload',
+                m_bb: 'Stability under load', m_data: 'Data used',
+                peak: 'Peak', range: 'Range', grade: 'Grade',
+                w_fail_ping: 'Latency (Ping) measurement failed.',
+                w_fail_down: 'Download measurement failed.',
+                w_fail_up: 'Upload measurement failed (the browser or network may block upload requests).',
+                w_hidden: 'The page was in the background during the test and browsers throttle background pages, so results may be inaccurate. Re-run with the page visible.',
+                w_short: 'The effective measurement window was under 3 seconds (because of the data cap), so accuracy is lower. Raise or remove the cap.',
+                w_capHit: 'A phase was stopped when it reached the selected data cap.',
+                w_noProbe: 'Not enough samples to measure latency under load in one of the phases.',
+                chartTitle: 'Live speed chart',
+                chartHint: 'Every point is a real measurement taken during the test. The grey zone is the warm-up period, excluded from the result.',
+                legendWarm: 'Warm-up (not counted)',
+                useTitle: 'What suits your connection?', useHint: 'Rough guidance based on your results above.',
+                lv_ok: 'Good', lv_warn: 'Fair', lv_bad: 'Poor',
+                u_call: 'HD video calls', u_hd: '1080p streaming', u_4k: '4K streaming',
+                u_game: 'Online gaming', u_up: 'File upload & cloud backup',
+                setTitle: 'Options', presetsLbl: 'Presets',
+                pQuick: 'Quick (5s / 100MB cap)', pStd: 'Standard', pDeep: 'Thorough (20s / 8 connections)', pReset: 'Reset to default',
+                o_duration: 'Duration per phase', o_streams: 'Parallel connections', o_cap: 'Data cap per phase',
+                o_unit: 'Display unit', o_theme: 'Theme', o_tests: 'Tests to run',
+                t_ping: 'Latency & jitter', t_down: 'Download', t_up: 'Upload', t_loaded: 'Latency under load',
+                o_history: 'Save results on this device',
+                sec: 's', unlimited: 'Unlimited', theme_auto: 'Auto', theme_light: 'Light', theme_dark: 'Dark',
+                hTitle: 'Results history', hEmpty: 'No saved results yet.',
+                hDate: 'Date', hServer: 'Server',
+                hCopy: 'Copy last result', hCsv: 'Export CSV', hJson: 'Export JSON', hClear: 'Clear history',
+                copied: 'Copied', copyFail: 'Copy failed', cleared: 'History cleared', nothing: 'No result yet',
+                dTitle: 'Measurement details (verification)',
+                dDesc: 'These are the raw inputs behind the numbers: each speed = (bytes actually transferred × 8) ÷ the measurement window after excluding warm-up.',
+                d_server: 'Server', d_isp: 'ISP (as seen by the server)', d_ip: 'Your public IP',
+                d_ping: 'Ping samples', d_loss: 'Failed ping requests', d_down: 'Download', d_up: 'Upload',
+                d_total: 'Total data transferred', d_browser: 'Browser estimate (not from this test)',
+                d_conn: 'Parallel connections', d_none: 'No data yet — run the test.',
+                samples: 'samples', bytesWin: 'data', window: 'window', warm: 'warm-up excluded', s: 's',
+                nTitle: 'Important notes',
+                notes: [
+                    'Speed is in megabits per second (Mbps), not megabytes (MB/s): 8 Mbps = 1 MB/s.',
+                    'The test runs against the nearest Cloudflare server, so results can differ slightly from Speedtest or Fast.com, which use different servers and methods.',
+                    'The first part of each phase (warm-up) is excluded because a new connection is slower by nature; speed is computed only from bytes transferred afterwards.',
+                    'Upload is counted from bytes the browser handed to the network; on short runs it can read slightly high because of buffering, so prefer 10 seconds or more.',
+                    'Browsers may multiplex parallel connections onto one (HTTP/2), so very fast links (roughly above 500 Mbps) can read lower than their true speed.',
+                    'Latency under load (bufferbloat) shows how much Ping rises during download/upload; a large rise means laggy calls and games when the connection is shared.',
+                    'On limited data plans use the data cap; tests on fast links can use hundreds of megabytes.',
+                    'For the most accurate result: use a wired connection, close downloads and streaming, pause any VPN, and keep this page visible for the whole test.'
+                ],
                 footer: 'Developed by Mohammed Nawaf • Fully Responsive'
             }
         };
-        let lang = 'ar';
-        let state = 'idle'; // idle | running | done | error
-        let phase = null;
- 
-        const $ = id => document.getElementById(id);
- 
-        function applyLanguage() {
-            document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
-            $('langBtn').textContent = lang === 'ar' ? 'English' : 'العربية';
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
-            $('startLabel').textContent = state === 'done' || state === 'error' ? T[lang].again : T[lang].start;
-            renderStatus();
+        const t = k => (T[settings.lang][k] !== undefined ? T[settings.lang][k] : k);
+
+        // ============================================================
+        //  UI rendering
+        // ============================================================
+        const unitLabel = () => UNITS[settings.unit].label;
+        const toUnit = mbps => mbps * UNITS[settings.unit].f;
+        const fmtSpeed = mbps => fmtN(toUnit(mbps));
+
+        function buildSelects() {
+            const fill = (id, items, cur) => {
+                const el = $(id); el.innerHTML = '';
+                items.forEach(([v, l]) => { const o = document.createElement('option'); o.value = String(v); o.textContent = l; el.appendChild(o); });
+                el.value = String(cur);
+                if (el.value !== String(cur)) { // custom stored value not in list
+                    const o = document.createElement('option'); o.value = String(cur); o.textContent = String(cur); el.appendChild(o); el.value = String(cur);
+                }
+            };
+            fill('optDuration', [5, 8, 10, 15, 20, 30].map(n => [n, `${n} ${t('sec')}`]), settings.duration);
+            fill('optStreams', [1, 2, 4, 6, 8, 12, 16].map(n => [n, String(n)]), settings.streams);
+            fill('optCap', [[0, t('unlimited')], ...[100, 250, 500, 1000, 2000].map(n => [n, n >= 1000 ? `${n / 1000} GB` : `${n} MB`])], settings.cap);
+            fill('optUnit', Object.entries(UNITS).map(([k, u]) => [k, u.label]), settings.unit);
+            fill('optTheme', [['auto', t('theme_auto')], ['light', t('theme_light')], ['dark', t('theme_dark')]], settings.theme);
+        }
+        function syncControls() {
+            $('tPing').checked = settings.tests.ping; $('tDown').checked = settings.tests.down;
+            $('tUp').checked = settings.tests.up; $('tLoaded').checked = settings.tests.loaded;
+            $('optHistory').checked = settings.history;
+        }
+        function setLocked(v) {
+            document.querySelectorAll('details select, details input, [data-preset]').forEach(el => { el.disabled = v; });
+            $('clearBtn').disabled = v;
+        }
+        function applyTheme() {
+            if (settings.theme === 'auto') document.documentElement.removeAttribute('data-theme');
+            else document.documentElement.setAttribute('data-theme', settings.theme);
         }
         function renderStatus() {
-            const s = $('speedStatus');
+            const s = $('status');
             s.classList.toggle('error', state === 'error');
-            if (state === 'error') s.textContent = T[lang].err;
-            else if (state === 'done') s.textContent = T[lang].done;
-            else if (state === 'running') s.textContent = T[lang][phase];
-            else s.textContent = T[lang].ready;
+            if (state === 'running') s.textContent = t('s_' + phase);
+            else if (state === 'error') s.textContent = t('errAll');
+            else if (state === 'cancelled') s.textContent = t('cancelled');
+            else if (state === 'done') s.textContent = t('done');
+            else s.textContent = t('ready');
+            $('gTag').textContent = state === 'running' ? t('tag_' + phase) : '';
+            $('startLabel').textContent = state === 'idle' || state === 'running' ? t('start') : t('again');
         }
-        function toggleLanguage() { lang = lang === 'ar' ? 'en' : 'ar'; applyLanguage(); }
-        function setPhase(p) { phase = p; renderStatus(); }
- 
-        // ---------- Helpers ----------
-        const fmt = n => n.toFixed(n >= 100 ? 0 : n >= 10 ? 1 : 2);
-        const median = a => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
- 
-        // Random (incompressible) upload payload
+        function renderWarns() {
+            const ul = $('warns'); ul.innerHTML = '';
+            lastWarns.forEach(k => { const li = document.createElement('li'); li.textContent = t('w_' + k); ul.appendChild(li); });
+            ul.classList.toggle('show', lastWarns.length > 0);
+        }
+        function renderResult() {
+            const r = lastResult;
+            const set = (id, v) => { $(id).textContent = v; };
+            const U = unitLabel();
+            set('pingVal', r && r.ping ? `${fmtMs(r.ping.median)} ms` : '--');
+            set('pingSub', r && r.ping ? `${t('range')}: ${fmtMs(r.ping.min)}–${fmtMs(r.ping.max)} ms` : '');
+            set('jitterVal', r && r.ping ? `${r.ping.jitter.toFixed(1)} ms` : '--');
+            set('downVal', r && r.down ? `${fmtSpeed(r.down.mbps)} ${U}` : '--');
+            set('downSub', r && r.down ? `${t('peak')}: ${fmtSpeed(r.down.peak)} ${U}` : '');
+            set('upVal', r && r.up ? `${fmtSpeed(r.up.mbps)} ${U}` : '--');
+            set('upSub', r && r.up ? `${t('peak')}: ${fmtSpeed(r.up.peak)} ${U}` : '');
+            const ld = r && r.ldDown, lu = r && r.ldUp, idle = r && r.ping ? r.ping.median : null;
+            set('ldVal', ld != null ? `${fmtMs(ld)} ms` : '--');
+            set('ldSub', ld != null && idle != null ? `+${fmtMs(Math.max(0, ld - idle))} ms` : '');
+            set('luVal', lu != null ? `${fmtMs(lu)} ms` : '--');
+            set('luSub', lu != null && idle != null ? `+${fmtMs(Math.max(0, lu - idle))} ms` : '');
+            if (r && r.bb) { set('bbVal', r.bb.grade); set('bbSub', `+${fmtMs(r.bb.delta)} ms`); } else { set('bbVal', '--'); set('bbSub', ''); }
+            if (r && (r.down || r.up)) {
+                const d = r.down ? r.down.bytes : 0, u = r.up ? r.up.bytes : 0;
+                set('dataVal', fmtBytes(d + u)); set('dataSub', `↓ ${fmtBytes(d)}  ↑ ${fmtBytes(u)}`);
+            } else { set('dataVal', '--'); set('dataSub', ''); }
+
+            // Gauge final value
+            if (state !== 'running') {
+                const gv = $('gVal'), gu = $('gUnit');
+                if (r && r.down) { gv.textContent = fmtSpeed(r.down.mbps); gu.textContent = U; }
+                else if (r && r.up) { gv.textContent = fmtSpeed(r.up.mbps); gu.textContent = U; }
+                else if (r && r.ping) { gv.textContent = fmtMs(r.ping.median); gu.textContent = 'ms'; }
+                else { gv.textContent = '0.00'; gu.textContent = U; }
+            }
+            renderUse(); renderDetails(); drawChart();
+        }
+
+        function renderUse() {
+            const r = lastResult, card = $('useCard'), list = $('useList');
+            list.innerHTML = '';
+            if (!r) { card.hidden = true; return; }
+            const d = r.down ? r.down.mbps : null, u = r.up ? r.up.mbps : null;
+            const p = r.ping ? r.ping.median : null, j = r.ping ? r.ping.jitter : null;
+            const items = [];
+            if (d != null && u != null) items.push(['u_call', d >= 3 && u >= 3 && (p == null || p <= 150) ? 'ok' : (d >= 1.5 && u >= 1.5 ? 'warn' : 'bad')]);
+            if (d != null) items.push(['u_hd', d >= 8 ? 'ok' : d >= 5 ? 'warn' : 'bad']);
+            if (d != null) items.push(['u_4k', d >= 25 ? 'ok' : d >= 15 ? 'warn' : 'bad']);
+            if (p != null) items.push(['u_game', p <= 60 && j <= 20 ? 'ok' : p <= 100 && j <= 40 ? 'warn' : 'bad']);
+            if (u != null) items.push(['u_up', u >= 20 ? 'ok' : u >= 5 ? 'warn' : 'bad']);
+            card.hidden = items.length === 0;
+            items.forEach(([k, lv]) => {
+                const row = document.createElement('div'); row.className = 'use';
+                const a = document.createElement('span'); a.textContent = t(k);
+                const b = document.createElement('span'); b.className = 'badge ' + lv; b.textContent = t('lv_' + lv);
+                row.append(a, b); list.appendChild(row);
+            });
+        }
+
+        function renderDetails() {
+            const body = $('detailsBody'); body.innerHTML = '';
+            const r = lastResult;
+            const add = (label, val) => {
+                const tr = document.createElement('tr');
+                const th = document.createElement('th'); th.textContent = label;
+                const td = document.createElement('td'); td.className = 'val'; td.textContent = val;
+                tr.append(th, td); body.appendChild(tr);
+            };
+            if (!r) { add('—', t('d_none')); return; }
+            const U = unitLabel(), s = t('s');
+            if (r.server) {
+                if (r.server.where) add(t('d_server'), r.server.where);
+                if (r.server.isp) add(t('d_isp'), r.server.isp);
+                if (r.server.ip) add(t('d_ip'), r.server.ip);
+            }
+            if (r.ping) {
+                add(t('d_ping'), `${r.ping.n}/${r.ping.total} ${t('samples')} · ${t('range')} ${fmtMs(r.ping.min)}–${fmtMs(r.ping.max)} ms`);
+                add(t('d_loss'), `${r.ping.lost}/${r.ping.total}`);
+            }
+            const phaseRow = (label, x) => add(label, `${fmtSpeed(x.mbps)} ${U} · ${t('bytesWin')} ${fmtBytes(x.bytes)} · ${t('window')} ${x.windowSec.toFixed(1)}${s} · ${t('warm')} ${x.warmSec.toFixed(1)}${s} · ${t('d_conn')} ${x.streams}`);
+            if (r.down) phaseRow(t('d_down'), r.down);
+            if (r.up) phaseRow(t('d_up'), r.up);
+            if (r.down || r.up) add(t('d_total'), fmtBytes((r.down ? r.down.bytes : 0) + (r.up ? r.up.bytes : 0)));
+            const c = navigator.connection;
+            if (c && (c.effectiveType || c.downlink)) add(t('d_browser'), [c.effectiveType, c.downlink != null ? `${c.downlink} Mbps` : null, c.rtt != null ? `${c.rtt} ms` : null].filter(Boolean).join(' · '));
+        }
+
+        function renderNotes() {
+            const ul = $('notesList'); ul.innerHTML = '';
+            T[settings.lang].notes.forEach(n => { const li = document.createElement('li'); li.textContent = n; ul.appendChild(li); });
+        }
+
+        function renderHistory() {
+            const wrap = $('histWrap'); wrap.innerHTML = '';
+            const h = store.get('speedtest.history', []);
+            if (!h.length) { const d = document.createElement('div'); d.className = 'empty'; d.textContent = t('hEmpty'); wrap.appendChild(d); return; }
+            const tbl = document.createElement('table');
+            const head = document.createElement('tr');
+            [t('hDate'), 'Ping', 'Jitter', `${t('m_down')} (${unitLabel()})`, `${t('m_up')} (${unitLabel()})`, t('m_bb'), t('hServer')].forEach(x => { const th = document.createElement('th'); th.textContent = x; head.appendChild(th); });
+            tbl.appendChild(head);
+            h.slice(0, 15).forEach(e => {
+                const tr = document.createElement('tr');
+                const loc = settings.lang === 'ar' ? 'ar-SA-u-ca-gregory' : 'en-GB';
+                const cells = [
+                    new Date(e.ts).toLocaleString(loc, { dateStyle: 'short', timeStyle: 'short' }),
+                    e.ping != null ? `${fmtMs(e.ping)} ms` : '--', e.jitter != null ? `${e.jitter.toFixed(1)} ms` : '--',
+                    e.down != null ? fmtSpeed(e.down) : '--', e.up != null ? fmtSpeed(e.up) : '--',
+                    e.bb || '--', e.server || '--'
+                ];
+                cells.forEach(x => { const td = document.createElement('td'); td.textContent = x; tr.appendChild(td); });
+                tbl.appendChild(tr);
+            });
+            wrap.appendChild(tbl);
+        }
+
+        function applyLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+            $('langLabel').textContent = settings.lang === 'ar' ? 'English' : 'العربية';
+            document.documentElement.dir = settings.lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = settings.lang;
+            buildSelects(); syncControls(); renderNotes(); renderStatus(); renderWarns(); renderHistory(); renderResult();
+            if (state !== 'running' && !lastResult) $('gUnit').textContent = unitLabel();
+        }
+
+        let toastTimer = null;
+        function toast(msg) {
+            const el = $('toast'); el.textContent = msg; el.classList.add('show');
+            clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+        }
+
+        // ============================================================
+        //  Live chart (canvas)
+        // ============================================================
+        function drawChart() {
+            const cv = $('chart'); if (!cv || !cv.getContext) return;
+            const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+            const dpr = window.devicePixelRatio || 1;
+            cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+            const c = cv.getContext('2d'); if (!c) return;
+            c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
+            const css = getComputedStyle(document.documentElement);
+            const col = n => css.getPropertyValue(n).trim() || '#888';
+            const padL = 48, padR = 10, padT = 10, padB = 22;
+            const pw = w - padL - padR, ph = h - padT - padB;
+            const pts = [...chart.down, ...chart.up];
+            const xmax = Math.max(1, ...pts.map(p => p[0]), chart.downWarm ? chart.downWarm[1] : 0, chart.upWarm ? chart.upWarm[1] : 0);
+            const ymaxRaw = Math.max(1, ...pts.map(p => p[1])) * 1.1;
+            const p10 = Math.pow(10, Math.floor(Math.log10(ymaxRaw))), f = ymaxRaw / p10;
+            const ymax = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p10;
+            const X = x => padL + (x / xmax) * pw, Y = y => padT + ph * (1 - y / ymax);
+
+            [chart.downWarm, chart.upWarm].forEach(wz => {
+                if (!wz) return;
+                c.fillStyle = col('--text3'); c.globalAlpha = .18;
+                c.fillRect(X(wz[0]), padT, Math.max(1, X(wz[1]) - X(wz[0])), ph); c.globalAlpha = 1;
+            });
+            c.font = '11px sans-serif'; c.textBaseline = 'middle'; c.strokeStyle = col('--border'); c.fillStyle = col('--text3'); c.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = padT + ph * (1 - i / 4);
+                c.beginPath(); c.moveTo(padL, y); c.lineTo(w - padR, y); c.stroke();
+                c.textAlign = 'right'; c.fillText(fmtN(toUnit(ymax * i / 4)), padL - 6, y);
+            }
+            c.textAlign = 'left'; c.textBaseline = 'top'; c.fillText('0s', padL, h - padB + 6);
+            c.textAlign = 'right'; c.fillText(`${xmax.toFixed(0)}s`, w - padR, h - padB + 6);
+            const line = (data, color) => {
+                if (data.length < 2) return;
+                c.strokeStyle = col(color); c.lineWidth = 2; c.lineJoin = 'round'; c.beginPath();
+                data.forEach((p, i) => { i ? c.lineTo(X(p[0]), Y(p[1])) : c.moveTo(X(p[0]), Y(p[1])); }); c.stroke();
+            };
+            line(chart.down, '--blue'); line(chart.up, '--green');
+        }
+
+        // ============================================================
+        //  Measurement engine
+        // ============================================================
         function makePayload(size) {
             const buf = new Uint8Array(size);
             for (let i = 0; i < size; i += 65536) crypto.getRandomValues(buf.subarray(i, Math.min(i + 65536, size)));
             return new Blob([buf]);
         }
- 
-        // Shared byte-counting meter: ignores the warm-up period and computes the final
-        // speed only from bytes transferred AFTER warm-up until the end of the test.
-        function createMeter(onLive) {
-            const t0 = performance.now();
-            let total = 0, warmT = null, warmB = 0, lastUi = 0;
-            const win = []; // sliding window for live display
+        function checkCancel() { if (run && run.cancelled) throw CANCEL; }
+
+        // Counts real bytes. Speed = bytes after warm-up / time after warm-up (frozen at the exact stop moment).
+        function createMeter(durMs, onLive) {
+            const t0 = performance.now(), warmMs = Math.min(2000, durMs * 0.25);
+            let total = 0, warmT = null, warmB = 0, lastUi = 0, endT = null, endB = null, peak = 0, capHit = false;
+            const win = [];
             return {
+                t0, warmMs,
+                get bytes() { return endB !== null ? endB : total; },
+                markCap() { capHit = true; },
                 add(n) {
+                    if (endT !== null || n <= 0) return;
                     total += n;
                     const now = performance.now();
-                    if (warmT === null && now - t0 >= CFG.warmupMs) { warmT = now; warmB = total; }
+                    if (warmT === null && now - t0 >= warmMs) { warmT = now; warmB = total; }
                     win.push([now, total]);
                     while (win.length > 2 && now - win[0][0] > 1000) win.shift();
                     if (now - lastUi > 120 && win.length > 1) {
                         lastUi = now;
-                        const [ta, ba] = win[0];
-                        const dt = (now - ta) / 1000;
-                        if (dt > 0.1) onLive(((total - ba) * 8) / dt / 1e6);
+                        const dt = (now - win[0][0]) / 1000;
+                        if (dt > 0.2) {
+                            const v = ((total - win[0][1]) * 8) / dt / 1e6;
+                            if (warmT !== null && now - warmT >= 1000 && v > peak) peak = v;
+                            onLive(v, (now - t0) / 1000);
+                        }
                     }
                 },
-                finish() {
-                    const now = performance.now();
-                    if (warmT === null) { warmT = t0; warmB = 0; } // very short run fallback
-                    const dt = (now - warmT) / 1000;
-                    return dt > 0 ? ((total - warmB) * 8) / dt / 1e6 : 0;
+                freeze() { if (endT === null) { endT = performance.now(); endB = total; } },
+                result() {
+                    const eT = endT !== null ? endT : performance.now(), eB = endB !== null ? endB : total;
+                    const sT = warmT !== null ? warmT : t0, sB = warmT !== null ? warmB : 0;
+                    const dt = (eT - sT) / 1000;
+                    const mbps = dt > 0 ? ((eB - sB) * 8) / dt / 1e6 : 0;
+                    return { mbps, bytes: eB, windowSec: dt, elapsedSec: (eT - t0) / 1000, warmSec: warmT !== null ? (warmT - t0) / 1000 : (eT - t0) / 1000, peak: Math.max(peak, mbps), capHit };
                 }
             };
         }
- 
-        // ---------- Ping + Jitter ----------
-        async function measurePing() {
+
+        async function measurePing(onSample, setFrac) {
             const url = () => `${BASE}/__down?bytes=0&r=${Math.random()}`;
-            await fetch(url(), { cache: 'no-store' }); // warm-up: DNS + TLS handshake excluded
-            const times = [];
-            for (let i = 0; i < CFG.pingSamples; i++) {
-                const s = performance.now();
-                await fetch(url(), { cache: 'no-store' });
-                times.push(performance.now() - s);
+            const one = async ms => {
+                const c = new AbortController(), to = setTimeout(() => c.abort(), ms), s = performance.now();
+                try { const r = await fetch(url(), { cache: 'no-store', signal: c.signal }); await r.arrayBuffer(); return performance.now() - s; }
+                finally { clearTimeout(to); }
+            };
+            await one(6000); // warm-up: DNS + TLS handshake excluded; throws if the server is unreachable
+            const times = []; let lost = 0;
+            for (let i = 0; i < PING_SAMPLES; i++) {
+                checkCancel();
+                try { const v = await one(2500); times.push(v); onSample(v); } catch (e) { lost++; }
+                setFrac((i + 1) / PING_SAMPLES);
+                await sleep(30);
             }
-            let j = 0;
-            for (let i = 1; i < times.length; i++) j += Math.abs(times[i] - times[i - 1]);
-            return { ping: median(times), jitter: j / (times.length - 1) };
+            if (times.length < 5) throw new Error('too few ping samples');
+            let j = 0; for (let i = 1; i < times.length; i++) j += Math.abs(times[i] - times[i - 1]);
+            return { median: median(times), min: Math.min(...times), max: Math.max(...times), jitter: j / (times.length - 1), lost, total: PING_SAMPLES, n: times.length };
         }
- 
-        // ---------- Download (parallel streams, bytes counted while streaming) ----------
-        async function measureDownload(onLive) {
-            const meter = createMeter(onLive);
+
+        // Latency measured on a parallel request while the link is saturated (bufferbloat).
+        function startProbe() {
+            let active = true; const times = [], t0 = performance.now();
+            (async () => {
+                while (active) {
+                    const s = performance.now();
+                    try {
+                        const r = await fetch(`${BASE}/__down?bytes=0&r=${Math.random()}`, { cache: 'no-store' }); await r.arrayBuffer();
+                        if (active && s - t0 > 1500) times.push(performance.now() - s);
+                    } catch (e) { /* ignore */ }
+                    await sleep(200);
+                }
+            })();
+            return { stop() { active = false; return times.length >= 3 ? median(times) : null; } };
+        }
+
+        async function measureDownload(o, onLive, setFrac) {
+            const meter = createMeter(o.duration * 1000, onLive);
             const ctrl = new AbortController();
-            let stop = false, failed = 0, okBytes = 0;
-            const timer = setTimeout(() => { stop = true; ctrl.abort(); }, CFG.testMs);
- 
+            let stop = false, failed = 0, ok = 0;
+            const stopNow = () => { if (stop) return; stop = true; meter.freeze(); ctrl.abort(); };
+            run.aborts.add(stopNow);
+            const timer = setTimeout(stopNow, o.duration * 1000);
+            const prog = setInterval(() => {
+                const f = (performance.now() - meter.t0) / (o.duration * 1000), cp = o.cap ? meter.bytes / (o.cap * 1e6) : 0;
+                setFrac(Math.min(1, Math.max(f, cp)));
+            }, 100);
             const worker = async () => {
                 while (!stop) {
                     try {
-                        const r = await fetch(`${BASE}/__down?bytes=${CFG.downChunk}&r=${Math.random()}`,
-                            { cache: 'no-store', signal: ctrl.signal });
+                        const r = await fetch(`${BASE}/__down?bytes=${CHUNK_DOWN}&r=${Math.random()}`, { cache: 'no-store', signal: ctrl.signal });
                         if (!r.ok) throw new Error('HTTP ' + r.status);
-                        const reader = r.body.getReader();
+                        const rd = r.body.getReader();
                         for (;;) {
-                            const { done, value } = await reader.read();
+                            const { done, value } = await rd.read();
                             if (done) break;
-                            okBytes += value.length;
-                            meter.add(value.length);
+                            ok += value.length; meter.add(value.length);
+                            if (o.cap && meter.bytes >= o.cap * 1e6) { meter.markCap(); stopNow(); return; }
                         }
-                    } catch (e) {
-                        if (stop) return;
-                        if (++failed > 3) throw e;
+                    } catch (e) { if (stop) return; if (++failed > 3) throw e; }
+                }
+            };
+            try { await Promise.all(Array.from({ length: o.streams }, worker)); }
+            finally { clearTimeout(timer); clearInterval(prog); run.aborts.delete(stopNow); stopNow(); }
+            if (ok === 0) throw new Error('no data');
+            return { ...meter.result(), streams: o.streams };
+        }
+
+        async function measureUpload(o, onLive, setFrac) {
+            const meter = createMeter(o.duration * 1000, onLive);
+            const payload = makePayload(CHUNK_UP), streams = Math.min(o.streams, 8);
+            let stop = false, failed = 0, ok = 0;
+            const active = new Set();
+            const stopNow = () => { if (stop) return; stop = true; meter.freeze(); active.forEach(x => x.abort()); };
+            run.aborts.add(stopNow);
+            const timer = setTimeout(stopNow, o.duration * 1000);
+            const prog = setInterval(() => {
+                const f = (performance.now() - meter.t0) / (o.duration * 1000), cp = o.cap ? meter.bytes / (o.cap * 1e6) : 0;
+                setFrac(Math.min(1, Math.max(f, cp)));
+            }, 100);
+            const sendOne = () => new Promise((res, rej) => {
+                const x = new XMLHttpRequest(); active.add(x); let last = 0;
+                x.open('POST', `${BASE}/__up?r=${Math.random()}`);
+                x.upload.onprogress = e => {
+                    const d = e.loaded - last; last = e.loaded; ok += d; meter.add(d);
+                    if (o.cap && meter.bytes >= o.cap * 1e6) { meter.markCap(); stopNow(); }
+                };
+                x.onload = () => { active.delete(x); x.status >= 400 ? rej(new Error('HTTP ' + x.status)) : res(); };
+                x.onabort = () => { active.delete(x); res(); };
+                x.onerror = x.ontimeout = () => { active.delete(x); rej(new Error('upload failed')); };
+                x.send(payload);
+            });
+            const worker = async () => {
+                while (!stop) { try { await sendOne(); } catch (e) { if (stop) return; if (++failed > 3) throw e; } }
+            };
+            try { await Promise.all(Array.from({ length: streams }, worker)); }
+            finally { clearTimeout(timer); clearInterval(prog); run.aborts.delete(stopNow); stopNow(); }
+            if (ok === 0) throw new Error('no data');
+            return { ...meter.result(), streams };
+        }
+
+        // Informational only (never used in any calculation). Failure is silent.
+        async function fetchServerInfo() {
+            const get = async (path, json) => {
+                const c = new AbortController(), to = setTimeout(() => c.abort(), 4000);
+                try { const r = await fetch(BASE + path, { cache: 'no-store', signal: c.signal }); if (!r.ok) return null; return json ? await r.json() : await r.text(); }
+                catch (e) { return null; } finally { clearTimeout(to); }
+            };
+            const out = {};
+            const m = await get('/meta', true);
+            if (m && typeof m === 'object') {
+                const colo = m.colo && typeof m.colo === 'object' ? (m.colo.iata || m.colo.city) : m.colo;
+                const where = [m.city || (m.colo && m.colo.city), colo, m.country].filter((v, i, a) => v && a.indexOf(v) === i).join(' · ');
+                if (where) out.where = where;
+                if (m.asOrganization) out.isp = String(m.asOrganization);
+                if (m.clientIp) out.ip = String(m.clientIp);
+            }
+            if (!out.where) {
+                const tx = await get('/cdn-cgi/trace', false);
+                if (tx) {
+                    const kv = Object.fromEntries(tx.split('\n').map(l => l.split('=')).filter(a => a.length === 2));
+                    const where = [kv.colo, kv.loc].filter(Boolean).join(' · ');
+                    if (where) out.where = where;
+                    if (kv.ip && !out.ip) out.ip = kv.ip;
+                }
+            }
+            return Object.keys(out).length ? out : null;
+        }
+
+        const bbGrade = d => d < 30 ? 'A' : d < 60 ? 'B' : d < 150 ? 'C' : d < 400 ? 'D' : 'F';
+
+        // ============================================================
+        //  Test flow
+        // ============================================================
+        function setProgress(frac) {
+            const n = run ? run.planned.length : 1;
+            const p = Math.min(100, ((run ? run.done : 0) + frac) / n * 100);
+            $('gauge').style.setProperty('--p', p.toFixed(1));
+        }
+        function setPhase(p) { phase = p; renderStatus(); }
+
+        async function startTest() {
+            if (state === 'running') return;
+            const tests = settings.tests;
+            const planned = [...(tests.ping ? ['ping'] : []), ...(tests.down ? ['down'] : []), ...(tests.up ? ['up'] : [])];
+            if (!planned.length) { toast(t('pickOne')); return; }
+
+            run = { cancelled: false, aborts: new Set(), planned, done: 0, hidden: document.hidden };
+            state = 'running'; lastResult = null; lastWarns = []; chart = { down: [], up: [], downWarm: null, upWarm: null };
+            $('startBtn').hidden = true; $('cancelBtn').hidden = false; setLocked(true);
+            $('gauge').style.setProperty('--p', '0'); $('gVal').textContent = '0.00'; $('gUnit').textContent = unitLabel();
+            setPhase('server'); renderWarns(); renderResult();
+
+            const o = { duration: settings.duration, streams: settings.streams, cap: settings.cap };
+            const res = { ts: Date.now(), duration: o.duration, streams: o.streams, cap: o.cap, server: null, ping: null, down: null, up: null, ldDown: null, ldUp: null, bb: null };
+            const warns = [];
+            let okCount = 0;
+
+            const guarded = async (name, fn) => {
+                checkCancel(); setPhase(name);
+                try { const r = await fn(); checkCancel(); okCount++; return r; }
+                catch (e) {
+                    if (e === CANCEL || run.cancelled) throw CANCEL;
+                    console.error(name, e); warns.push('fail_' + name); return null;
+                } finally { run.done++; }
+            };
+
+            try {
+                res.server = await fetchServerInfo(); checkCancel();
+
+                if (tests.ping) {
+                    res.ping = await guarded('ping', () => measurePing(v => { $('gVal').textContent = fmtMs(v); $('gUnit').textContent = 'ms'; }, setProgress));
+                    if (res.ping) { $('gVal').textContent = fmtMs(res.ping.median); renderResultLive(res); }
+                }
+                if (tests.down) {
+                    $('gUnit').textContent = unitLabel();
+                    const probe = tests.loaded ? startProbe() : null;
+                    try {
+                        res.down = await guarded('down', () => measureDownload(o, (v, ts) => {
+                            $('gVal').textContent = fmtSpeed(v); chart.down.push([ts, v]); drawChart();
+                        }, setProgress));
+                    } finally { if (probe) res.ldDown = probe.stop(); }
+                    if (res.down) {
+                        chart.downWarm = [0, res.down.warmSec]; chart.upOffset = res.down.elapsedSec + 1;
+                        $('gVal').textContent = fmtSpeed(res.down.mbps);
+                        if (tests.loaded && res.ldDown == null) warns.push('noProbe');
+                        renderResultLive(res);
                     }
                 }
-            };
-            try { await Promise.all(Array.from({ length: CFG.streams }, worker)); }
-            finally { clearTimeout(timer); }
-            if (okBytes === 0) throw new Error('no data');
-            return meter.finish();
-        }
- 
-        // ---------- Upload (real POST requests, progress counted via XHR) ----------
-        async function measureUpload(onLive) {
-            const meter = createMeter(onLive);
-            const payload = makePayload(CFG.upChunk);
-            let stop = false, failed = 0, okBytes = 0;
-            const active = new Set();
-            const timer = setTimeout(() => { stop = true; active.forEach(x => x.abort()); }, CFG.testMs);
- 
-            const sendOne = () => new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                active.add(xhr);
-                let last = 0;
-                xhr.open('POST', `${BASE}/__up?r=${Math.random()}`);
-                xhr.upload.onprogress = e => { const d = e.loaded - last; last = e.loaded; okBytes += d; meter.add(d); };
-                xhr.onload = () => { active.delete(xhr); resolve(); };
-                xhr.onabort = () => { active.delete(xhr); resolve(); };
-                xhr.onerror = () => { active.delete(xhr); reject(new Error('upload failed')); };
-                xhr.send(payload);
-            });
- 
-            const worker = async () => {
-                while (!stop) {
-                    try { await sendOne(); }
-                    catch (e) { if (stop) return; if (++failed > 3) throw e; }
+                if (tests.up) {
+                    $('gUnit').textContent = unitLabel();
+                    const off = chart.upOffset || 0;
+                    const probe = tests.loaded ? startProbe() : null;
+                    try {
+                        res.up = await guarded('up', () => measureUpload(o, (v, ts) => {
+                            $('gVal').textContent = fmtSpeed(v); chart.up.push([off + ts, v]); drawChart();
+                        }, setProgress));
+                    } finally { if (probe) res.ldUp = probe.stop(); }
+                    if (res.up) {
+                        chart.upWarm = [off, off + res.up.warmSec];
+                        if (tests.loaded && res.ldUp == null) warns.push('noProbe');
+                        renderResultLive(res);
+                    }
                 }
-            };
-            try { await Promise.all(Array.from({ length: Math.min(CFG.streams, 3) }, worker)); }
-            finally { clearTimeout(timer); }
-            if (okBytes === 0) throw new Error('no data');
-            return meter.finish();
-        }
- 
-        // ---------- Main flow ----------
-        async function startSpeedTest() {
-            const btn = $('startBtn'), gauge = $('gaugeBox'), num = $('speedNum');
-            btn.disabled = true;
-            gauge.classList.add('running');
-            state = 'running';
-            ['pingVal', 'jitterVal'].forEach(id => $(id).textContent = '-- ms');
-            ['downloadVal', 'uploadVal'].forEach(id => $(id).textContent = '-- Mbps');
-            num.textContent = '0.00';
- 
-            try {
-                setPhase('sPing');
-                const { ping, jitter } = await measurePing();
-                $('pingVal').textContent = `${Math.round(ping)} ms`;
-                $('jitterVal').textContent = `${jitter.toFixed(1)} ms`;
- 
-                setPhase('sDown');
-                const down = await measureDownload(v => { num.textContent = fmt(v); });
-                $('downloadVal').textContent = `${fmt(down)} Mbps`;
-                num.textContent = fmt(down);
- 
-                setPhase('sUp');
-                const up = await measureUpload(v => { num.textContent = fmt(v); });
-                $('uploadVal').textContent = `${fmt(up)} Mbps`;
- 
-                num.textContent = fmt(down); // gauge shows final download result
-                state = 'done';
+
+                if (okCount === 0) { state = 'error'; lastResult = null; }
+                else {
+                    if (res.ping && (res.ldDown != null || res.ldUp != null)) {
+                        const worst = Math.max(res.ldDown != null ? res.ldDown : 0, res.ldUp != null ? res.ldUp : 0);
+                        const delta = Math.max(0, worst - res.ping.median);
+                        res.bb = { grade: bbGrade(delta), delta };
+                    }
+                    if (run.hidden) warns.push('hidden');
+                    if ((res.down && res.down.windowSec < 3) || (res.up && res.up.windowSec < 3)) warns.push('short');
+                    if ((res.down && res.down.capHit) || (res.up && res.up.capHit)) warns.push('capHit');
+                    state = 'done'; lastResult = res;
+                    saveHistory(res);
+                }
             } catch (e) {
-                console.error(e);
-                state = 'error';
-                num.textContent = '0.00';
+                if (e === CANCEL) { state = 'cancelled'; lastResult = null; lastWarns = []; chart = { down: [], up: [], downWarm: null, upWarm: null }; }
+                else { console.error(e); state = 'error'; lastResult = null; }
             }
-            gauge.classList.remove('running');
-            btn.disabled = false;
-            applyLanguage();
+
+            lastWarns = state === 'done' ? [...new Set(warns)] : [];
+            run = null; phase = null;
+            $('gauge').style.setProperty('--p', state === 'done' ? '100' : '0');
+            $('startBtn').hidden = false; $('cancelBtn').hidden = true; setLocked(false);
+            renderStatus(); renderWarns(); renderResult(); renderHistory();
+            if (state !== 'done') { $('gVal').textContent = '0.00'; $('gUnit').textContent = unitLabel(); }
         }
- 
+
+        // Show finished phases while the test continues
+        function renderResultLive(res) {
+            const keep = lastResult; lastResult = res; const s = state; state = 'running';
+            renderResult(); state = s; lastResult = keep;
+        }
+
+        function cancelTest() {
+            if (!run) return;
+            run.cancelled = true;
+            run.aborts.forEach(f => { try { f(); } catch (e) { /* ignore */ } });
+        }
+
+        document.addEventListener('visibilitychange', () => { if (run && document.hidden) run.hidden = true; });
+
+        // ============================================================
+        //  History / export
+        // ============================================================
+        function saveHistory(r) {
+            if (!settings.history) return;
+            const h = store.get('speedtest.history', []);
+            h.unshift({
+                ts: r.ts, ping: r.ping ? r.ping.median : null, jitter: r.ping ? r.ping.jitter : null,
+                down: r.down ? r.down.mbps : null, up: r.up ? r.up.mbps : null,
+                ld: r.ldDown, lu: r.ldUp, bb: r.bb ? r.bb.grade : null,
+                server: r.server && r.server.where ? r.server.where : null, duration: r.duration, streams: r.streams
+            });
+            store.set('speedtest.history', h.slice(0, HISTORY_MAX));
+        }
+        function download(name, text, type) {
+            const a = document.createElement('a'), url = URL.createObjectURL(new Blob([text], { type }));
+            a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+        function summaryText(e) {
+            const U = unitLabel(), d = new Date(e.ts).toLocaleString(settings.lang === 'ar' ? 'ar-SA-u-ca-gregory' : 'en-GB');
+            const parts = [];
+            if (e.down != null) parts.push(`${t('m_down')}: ${fmtSpeed(e.down)} ${U}`);
+            if (e.up != null) parts.push(`${t('m_up')}: ${fmtSpeed(e.up)} ${U}`);
+            if (e.ping != null) parts.push(`Ping: ${fmtMs(e.ping)} ms`);
+            if (e.jitter != null) parts.push(`Jitter: ${e.jitter.toFixed(1)} ms`);
+            if (e.bb) parts.push(`${t('m_bb')}: ${e.bb}`);
+            return `${t('brand')} — ${d}\n${parts.join(' | ')}${e.server ? `\n${t('hServer')}: ${e.server}` : ''}`;
+        }
+        async function copyLast() {
+            const h = store.get('speedtest.history', []);
+            const e = lastResult ? {
+                ts: lastResult.ts, ping: lastResult.ping ? lastResult.ping.median : null, jitter: lastResult.ping ? lastResult.ping.jitter : null,
+                down: lastResult.down ? lastResult.down.mbps : null, up: lastResult.up ? lastResult.up.mbps : null,
+                bb: lastResult.bb ? lastResult.bb.grade : null, server: lastResult.server ? lastResult.server.where : null
+            } : h[0];
+            if (!e) { toast(t('nothing')); return; }
+            try { await navigator.clipboard.writeText(summaryText(e)); toast(t('copied')); } catch (err) { toast(t('copyFail')); }
+        }
+        function exportCsv() {
+            const h = store.get('speedtest.history', []); if (!h.length) { toast(t('nothing')); return; }
+            const q = v => v == null ? '' : `"${String(v).replace(/"/g, '""')}"`;
+            const rows = ['timestamp_iso,ping_ms,jitter_ms,download_mbps,upload_mbps,loaded_latency_down_ms,loaded_latency_up_ms,bufferbloat_grade,server,duration_s,connections'];
+            h.forEach(e => rows.push([q(new Date(e.ts).toISOString()), e.ping != null ? e.ping.toFixed(2) : '', e.jitter != null ? e.jitter.toFixed(2) : '', e.down != null ? e.down.toFixed(2) : '', e.up != null ? e.up.toFixed(2) : '', e.ld != null ? e.ld.toFixed(2) : '', e.lu != null ? e.lu.toFixed(2) : '', q(e.bb), q(e.server), e.duration ?? '', e.streams ?? ''].join(',')));
+            download('speedtest-history.csv', '﻿' + rows.join('\n'), 'text/csv;charset=utf-8');
+        }
+        function exportJson() {
+            const h = store.get('speedtest.history', []); if (!h.length) { toast(t('nothing')); return; }
+            download('speedtest-history.json', JSON.stringify(h.map(e => ({ ...e, timestamp_iso: new Date(e.ts).toISOString() })), null, 2), 'application/json');
+        }
+
+        // ============================================================
+        //  Events
+        // ============================================================
+        $('startBtn').addEventListener('click', startTest);
+        $('cancelBtn').addEventListener('click', cancelTest);
+        $('langBtn').addEventListener('click', () => { settings.lang = settings.lang === 'ar' ? 'en' : 'ar'; saveSettings(); applyLanguage(); });
+        $('themeBtn').addEventListener('click', () => {
+            const order = ['auto', 'light', 'dark']; settings.theme = order[(order.indexOf(settings.theme) + 1) % 3];
+            saveSettings(); applyTheme(); $('optTheme').value = settings.theme; drawChart(); toast(t('theme_' + settings.theme));
+        });
+        $('optDuration').addEventListener('change', e => { settings.duration = +e.target.value; saveSettings(); });
+        $('optStreams').addEventListener('change', e => { settings.streams = +e.target.value; saveSettings(); });
+        $('optCap').addEventListener('change', e => { settings.cap = +e.target.value; saveSettings(); });
+        $('optUnit').addEventListener('change', e => { settings.unit = e.target.value; saveSettings(); if (state !== 'running') { $('gUnit').textContent = unitLabel(); } renderHistory(); renderResult(); });
+        $('optTheme').addEventListener('change', e => { settings.theme = e.target.value; saveSettings(); applyTheme(); drawChart(); });
+        [['tPing', 'ping'], ['tDown', 'down'], ['tUp', 'up'], ['tLoaded', 'loaded']].forEach(([id, k]) => $(id).addEventListener('change', e => { settings.tests[k] = e.target.checked; saveSettings(); }));
+        $('optHistory').addEventListener('change', e => { settings.history = e.target.checked; saveSettings(); });
+        document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => {
+            const p = b.dataset.preset;
+            if (p === 'reset') { const lang = settings.lang; settings = mergeSettings({}); settings.lang = lang; }
+            else Object.assign(settings, PRESETS[p]);
+            saveSettings(); applyTheme(); buildSelects(); syncControls(); renderResult(); renderHistory();
+        }));
+        $('copyBtn').addEventListener('click', copyLast);
+        $('csvBtn').addEventListener('click', exportCsv);
+        $('jsonBtn').addEventListener('click', exportJson);
+        $('clearBtn').addEventListener('click', () => { store.set('speedtest.history', []); renderHistory(); toast(t('cleared')); });
+        window.addEventListener('resize', drawChart);
+
+        // ============================================================
+        //  Init
+        // ============================================================
+        applyTheme();
         applyLanguage();
+        window.__speedtest = { startTest, cancelTest, getState: () => ({ state, lastResult, lastWarns }) }; // handy for debugging
+    })();
     </script>
 </body>
- 
+
 </html>
- 
-Claude finished the response
